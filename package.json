@@ -3,16 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "cors": "^2.8.5",
+    "gql-merge": "0.0.6",
+    "graphql-to-typescript": "^0.1.2",
+    "graphql-tools": "^4.0.4",
     "graphql-yoga": "^1.17.1",
     "helmet": "^3.15.0",
+    "merge-graphql-schemas": "^1.5.8",
     "morgan": "^1.9.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts-ts": "3.1.0"
   },
   "scripts": {
-    "dev": "cd src && nodemon  --exec ts-node index.ts -e ts,graphql"
+    "dev": "cd src && nodemon  --exec ts-node index.ts -e ts,graphql",
+    "pretypes": "gql-merge --out-file ./src/schema.graphql ./src/api/**/*.graphql",
+    "types": "graphql-to-typescript ./src/schema.graphql ./src/types/graph.d.ts"
   },
   "devDependencies": {
     "@types/jest": "^23.3.13",
