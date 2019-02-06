@@ -9,13 +9,18 @@ type User {
   phoneNumber: String
   verifiedPhoneNumber: Boolean!
   profilePhoto: String
-  createdAt: String!
-  updateAt: String
   fullName: String
   isDriving: Boolean
   lastLng: Float
   lastLat: Float
   lastOrientation: Float
+  chat: Chat
+  messages: [Message]
+  verifications: [Verifications]
+  ridesAsPassenger: [Ride]
+  ridesAsDriver: [Ride]
+  createdAt: String!
+  updateAt: String
 }
 type Query {
   user: User
