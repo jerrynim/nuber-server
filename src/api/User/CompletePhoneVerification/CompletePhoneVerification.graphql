@@ -1,4 +1,4 @@
-type CompletePhoneVerification {
+type CompletePhoneVerificationResponse {
   ok: Boolean!
   error: String
   token: String
