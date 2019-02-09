@@ -7,6 +7,8 @@ import {
 import { Resolvers } from "../../../types/resolvers";
 import privateResolver from "../../../utils/privateResolver";
 
+/*email 유무확인>>Verification확인>>User.verifiedEmail=true */
+
 const resolvers: Resolvers = {
   Mutation: {
     CompleteEmailVerification: privateResolver(
