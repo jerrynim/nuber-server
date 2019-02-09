@@ -67,7 +67,7 @@ type EmailSignInResponse {
 type EmailSignUpResponse {
   ok: Boolean!
   error: String
-  toekn: String
+  token: String
 }
 
 type FacebookConnectResponse {
@@ -84,7 +84,6 @@ type GetMyProfileResponse {
 
 type Query {
   GetMyProfile: GetMyProfileResponse!
-  user: User
 }
 
 type User {
