@@ -26,6 +26,8 @@ class Place extends BaseEntity {
   isFav: boolean;
   @ManyToOne((type) => User, (user) => user.places)
   user: User;
+  @Column({ nullable: true })
+  userId: number;
   @CreateDateColumn()
   createdAt: string;
   @UpdateDateColumn()
