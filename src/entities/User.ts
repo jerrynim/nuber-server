@@ -16,8 +16,8 @@ import Chat from "./Chat";
 import Message from "./Message";
 import Place from "./Place";
 import Ride from "./Ride";
+const BCRYPT_ROUNDS = 10;
 
-const BCRYPT_ROUNDS = 10; /* 암호화할 횟수 */
 @Entity()
 class User extends BaseEntity {
   @PrimaryGeneratedColumn() id: number;
@@ -85,24 +85,28 @@ class User extends BaseEntity {
 
   @OneToMany((type) => Place, (place) => place.user)
   places: Place[];
+
+  @CreateDateColumn() createdAt: string;
+
+  @UpdateDateColumn() updatedAt: string;
+
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
   }
 
-  @CreateDateColumn() createdAt: string;
-  @UpdateDateColumn() updatedAt: string;
+  public comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
 
-  @BeforeInsert() /*새로운 Object를 만들기전에*/
-  @BeforeUpdate() /*Object를 업데이트 하기 전에*/
+  @BeforeInsert()
+  @BeforeUpdate()
   async savePassword(): Promise<void> {
     if (this.password) {
       const hashedPassword = await this.hashPassword(this.password);
       this.password = hashedPassword;
     }
   }
-  public comparePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
-  }
+
   private hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, BCRYPT_ROUNDS);
   }

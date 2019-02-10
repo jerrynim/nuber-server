@@ -1,18 +1,28 @@
 import cors from "cors";
 import { NextFunction, Response } from "express";
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer, PubSub } from "graphql-yoga";
 import helmet from "helmet";
 import logger from "morgan";
 import schema from "./schema";
 import decodeJWT from "./utils/decodeJWT";
 class App {
   public app: GraphQLServer;
+  public pubSub: any;
   constructor() {
+    this.pubSub = new PubSub();
+    this.pubSub.ee.setMaxListeners(
+      99
+    ); /*제품 단계에서는 Redies 나 Mecached등을 사용해야함 */
     this.app = new GraphQLServer({
       schema,
       context: (req) => {
+        const { connection: { context = null } = {} } = req;
+        /*connections 은 웹소켓으로 부터의 req context의 default로
+         null을 주고 connection의 default로 {}주는 방식 */
         return {
-          req: req.request
+          req: req.request,
+          pubSub: this.pubSub,
+          context
         };
       }
       /*context는 서버가 reslover등으로 주는 데이터 */
@@ -43,6 +53,8 @@ class App {
         req.user = undefined;
       }
     }
+    next();
   };
 }
+
 export default new App().app;

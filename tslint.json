@@ -11,5 +11,6 @@
     "interface-name": false,
     "strict-null-checks": false
   },
-  "rulesDirectory": []
+  "rulesDirectory": [],
+  "exclude": ["node_modules/**/*."]
 }
