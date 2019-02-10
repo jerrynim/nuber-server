@@ -1,3 +1,5 @@
+/*Twilio를 이용한 문자 전송 API */
+
 import Twilio from "twilio";
 
 const twilioClient = Twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);

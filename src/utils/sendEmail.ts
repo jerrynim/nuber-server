@@ -1,3 +1,5 @@
+/*메일을 보내는 API 무료는 자기자신에게만 보내기가능 */
+
 import Mailgun from "mailgun-js";
 
 const mailGunClient = new Mailgun({

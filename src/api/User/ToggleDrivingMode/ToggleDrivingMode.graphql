@@ -1,0 +1,12 @@
+type ToggleDrivingModeResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  ToggleDrivingMode(
+    orientation: Float
+    lat: Float
+    lng: Float
+  ): ToggleDrivingModeResponse!
+}

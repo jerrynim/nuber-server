@@ -1,3 +1,5 @@
+/*Object의 null을 없애는 함수 */
+
 const cleanNullArgs = (args: object) => {
   const notNull = {};
   Object.keys(args).forEach((key) => {
