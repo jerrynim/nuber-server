@@ -1,5 +1,8 @@
 import User from "../../../entities/User";
-import { ReportMovementResponse } from "../../../types/graph";
+import {
+  ReportMovementMutationArgs,
+  ReportMovementResponse
+} from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
 import cleanNullArgs from "../../../utils/cleanNullArgs";
 import privateResolver from "../../../utils/privateResolver";
@@ -7,7 +10,11 @@ import privateResolver from "../../../utils/privateResolver";
 const resolvers: Resolvers = {
   Mutation: {
     ReportMovement: privateResolver(
-      async (_, args, { req, pubSub }): Promise<ReportMovementResponse> => {
+      async (
+        _,
+        args: ReportMovementMutationArgs,
+        { req, pubSub }
+      ): Promise<ReportMovementResponse> => {
         const user: User = req.user;
         const notNull = cleanNullArgs(args);
         try {
@@ -28,4 +35,5 @@ const resolvers: Resolvers = {
     )
   }
 };
+
 export default resolvers;
