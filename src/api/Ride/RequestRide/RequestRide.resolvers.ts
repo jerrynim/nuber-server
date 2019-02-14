@@ -7,7 +7,7 @@ const resolvers: Resolvers = {
   Mutation: {
     RequestRide: privateResolver(async (_, args, { req, pubSub }) => {
       const user: User = req.user;
-      if (!user.isRiding) {
+      if (!user.isRiding && !user.isDriving) {
         try {
           const ride = await Ride.create({ ...args, passenger: user }).save();
           pubSub.publish("rideRequest", { NearbyRideSubscription: ride });
@@ -28,7 +28,7 @@ const resolvers: Resolvers = {
       } else {
         return {
           ok: false,
-          error: "Yu can't request two rides",
+          error: "Yu can't request two rides or drive and request",
           ride: null
         };
       }

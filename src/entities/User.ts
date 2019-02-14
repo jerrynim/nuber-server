@@ -7,7 +7,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -71,9 +70,6 @@ class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   fbId: string;
 
-  @ManyToOne((type) => Chat, (chat) => chat.participants)
-  chat: Chat;
-
   @OneToMany((type) => Message, (message) => message.user)
   messages: Message[];
 
@@ -85,6 +81,12 @@ class User extends BaseEntity {
 
   @OneToMany((type) => Place, (place) => place.user)
   places: Place[];
+
+  @OneToMany((type) => Chat, (chat) => chat.driver)
+  chatsAsPassenger: Chat[];
+
+  @OneToMany((type) => Chat, (chat) => chat.driver)
+  chatsAsDriver: Chat[];
 
   @CreateDateColumn() createdAt: string;
 

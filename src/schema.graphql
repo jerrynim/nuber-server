@@ -1,26 +1,33 @@
-type Chat {
-  id: Int!
-  messages: [Message]!
-  participants: [User]!
-  createdAt: String!
-  updatedAt: String
-}
-
-type Message {
-  id: Int!
-  text: String!
-  chat: Chat!
-  user: User!
-  createdAt: String!
-  updatedAt: String
-}
-
-type AddPlaceResponse {
+type GetChatResponse {
   ok: Boolean!
   error: String
+  chat: Chat
+}
+
+type Query {
+  GetChat(chatId: Int!): GetChatResponse!
+  GetMyPlaces: GetMyPlacesResponse!
+  GetNearbyRide: GetNearbyRideResponse!
+  GetRide(rideId: Int!): GetRideResponse!
+  GetMyProfile: GetMyProfileResponse!
+  GetNearbyDrivers: GetNearbyDriversResponse
+}
+
+type Subscription {
+  MessageSubscription: Message
+  NearbyRideSubscription: Ride
+  RideStatusSubscription: Ride
+  DriversSubscription: User
+}
+
+type SendChatMessageResponse {
+  ok: Boolean!
+  error: String
+  message: Message
 }
 
 type Mutation {
+  SendChatMessage(text: String!, chatId: Int!): SendChatMessageResponse!
   AddPlace(name: String!, lat: Float!, lng: Float!, address: String!, isFav: Boolean!): AddPlaceResponse!
   DeletePlace(placeId: Int!): DeletePlaceResponse!
   EditPlace(placeId: Int!, name: String, isFav: Boolean): EditPlaceResponse!
@@ -38,6 +45,34 @@ type Mutation {
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
 }
 
+type Chat {
+  id: Int!
+  messages: [Message]
+  passengerId: Int!
+  passenger: User!
+  driverId: Int
+  driver: User!
+  rideId: Int
+  ride: Ride!
+  createdAt: String!
+  updatedAt: String
+}
+
+type Message {
+  id: Int!
+  text: String!
+  chat: Chat!
+  user: User!
+  chatId: Int
+  createdAt: String!
+  updatedAt: String
+}
+
+type AddPlaceResponse {
+  ok: Boolean!
+  error: String
+}
+
 type DeletePlaceResponse {
   ok: Boolean!
   error: String
@@ -52,13 +87,6 @@ type GetMyPlacesResponse {
   ok: Boolean!
   error: String
   places: [Place]
-}
-
-type Query {
-  GetMyPlaces: GetMyPlacesResponse!
-  GetNearbyRide: GetNearbyRideResponse!
-  GetMyProfile: GetMyProfileResponse!
-  GetNearbyDrivers: GetNearbyDriversResponse
 }
 
 type Place {
@@ -80,9 +108,10 @@ type GetNearbyRideResponse {
   ride: Ride
 }
 
-type Subscription {
-  NearbyRideSubscription: Ride
-  DriversSubscription: User
+type GetRideResponse {
+  ok: Boolean!
+  error: String
+  ride: Ride
 }
 
 type RequestRideResponse {
@@ -103,8 +132,12 @@ type Ride {
   price: Float!
   distance: String!
   duration: String!
+  driverId: Int!
   driver: User!
+  passengerId: Int!
   passenger: User!
+  chatId: Int
+  chat: Chat
   createdAt: String!
   updatedAt: String
 }
@@ -192,7 +225,8 @@ type User {
   lastLat: Float
   lastOrientation: Float
   fbId: String
-  chat: Chat
+  chatsAsDriver: [Chat]
+  chatsAsPassenger: [Chat]
   messages: [Message]
   ridesAsPassenger: [Ride]
   ridesAsDriver: [Ride]
