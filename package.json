@@ -23,7 +23,7 @@
     "pg": "^7.8.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts-ts": "3.1.0",
+    "react-scripts-ts": "4.0.8",
     "twilio": "^3.28.0",
     "typeorm": "^0.2.12"
   },
