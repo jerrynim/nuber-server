@@ -16,7 +16,7 @@
     "graphql-tools": "^4.0.4",
     "graphql-yoga": "^1.17.1",
     "helmet": "^3.15.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "mailgun-js": "^0.22.0",
     "merge-graphql-schemas": "^1.5.8",
     "morgan": "^1.9.1",
