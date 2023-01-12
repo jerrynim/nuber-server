@@ -8,7 +8,7 @@
     "@types/twilio": "0.0.10",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^3.0.3",
-    "class-validator": "^0.9.1",
+    "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "gql-merge": "0.0.6",
